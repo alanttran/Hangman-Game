@@ -1,0 +1,12 @@
+.container{
+	text-align: center;
+}
+.current-word, .used-words{
+	font-size: 50px;
+}
+.already-used-warning{
+	height: 30px;
+}
+#newGame{
+	display: none;
+}
