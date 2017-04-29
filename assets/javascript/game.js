@@ -20,15 +20,10 @@ $( document ).ready(function() {
 
     // matching letters
     var matchingLetters = [];
-
     var usedLetters = []; 
-
     var guesses = 10;
-
     var wins = 0;
-
     var blanksRemaining = null;
-
     var playerWinOrLose = false;
 
     
