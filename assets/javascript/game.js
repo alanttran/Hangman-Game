@@ -26,7 +26,7 @@ $( document ).ready(function() {
     var blanksRemaining = null;
     var playerWinOrLose = false;
 
-    
+    wordArray = shuffle(wordArray);
     initialWordBlanks();
     
 
@@ -73,6 +73,11 @@ $( document ).ready(function() {
         }
         
     });
+
+    $('#newGame').on('click', function(){
+        reset();
+    });
+
 
     /**
 	 * Updates used words in the HTML
@@ -183,6 +188,35 @@ $( document ).ready(function() {
 	    });
     }
 
+
+    // shuffles the array upon start
+    function shuffle(array) {
+
+    	console.log('shuffle!');
+	  var currentIndex = array.length, temporaryValue, randomIndex;
+
+	  // While there remain elements to shuffle...
+	  while (0 !== currentIndex) {
+
+	    // Pick a remaining element...
+	    randomIndex = Math.floor(Math.random() * currentIndex);
+	    currentIndex -= 1;
+
+	    // And swap it with the current element.
+	    temporaryValue = array[currentIndex];
+	    array[currentIndex] = array[randomIndex];
+	    array[randomIndex] = temporaryValue;
+	  }
+
+	  return array;
+	}
+
+
+    /**
+	 * checks to see if the player has won or lost
+	 * to win, the blank spaces in the word array has to be 0
+	 * to lose the guesses are down to 0
+	 */
     function winOrLose(){
     	if(blanksRemaining === 0){
         	$('.js-win-or-lose').html("You Won! :)");
@@ -202,10 +236,7 @@ $( document ).ready(function() {
         
     }
 
-    $('#newGame').on('click', function(){
-        reset();
-    });
-
+    
     /**
 	 * resets the game with a new word
 	 */

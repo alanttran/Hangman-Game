@@ -28,4 +28,6 @@ h1,h2{
 	padding: 15px 0;
 	background-image: url('../images/background-box.png');
 }
-
+#newGame{
+	width: 100%;
+}
