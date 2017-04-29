@@ -1,12 +1,31 @@
+body{
+	background-image: url('http://traverslasik.com/wp-content/uploads/2015/06/texture-background-creative-bubbles-wallpaper.jpg');
+}
+h1,h2{
+	font-family: 'Anton', sans-serif;
+}
 .container{
 	text-align: center;
+	margin-top: 8%;
 }
 .current-word, .used-words{
 	font-size: 50px;
+	font-family: 'Overpass Mono', monospace;
 }
 .already-used-warning{
 	height: 30px;
 }
-#newGame{
-	display: none;
+.modal-title{
+	font-size: 50px;
 }
+.modal-body{
+	font-size: 32px;
+}
+.box{
+	width: 75%;
+	margin: 0 auto;
+	border-radius: 5px;
+	padding: 15px 0;
+	background-image: url('../images/background-box.png');
+}
+

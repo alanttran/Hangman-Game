@@ -2,7 +2,7 @@ $( document ).ready(function() {
     console.log( "ready!" ); //ready check
 
     // current set of words for the game
-    var wordArray = ["parenthesis", "ending", "hamburger", "chocolate"];
+    var wordArray = ["monitor", "program", "application", "keyboard", "javascript", "gaming", "network", "hamburger", "sandwich", "steak", "chicken"];
 
     var currentWordPosition = 0;
 
@@ -27,7 +27,9 @@ $( document ).ready(function() {
 
     var wins = 0;
 
-    var blanksRemaining = 0;
+    var blanksRemaining = null;
+
+    var playerWinOrLose = false;
 
     
     initialWordBlanks();
@@ -37,38 +39,44 @@ $( document ).ready(function() {
     // userKeyPress variable
     $('body').on('keyup', function(e){
     	//logs key to check
-        log(e.key);
-        userKeyPress = e.key;
 
-		var usedLetterMatch = false;       	
+    	// if player still has guesses and has not won or lost
+    	// this is to ignore keys press after winning/losing
+        if(guesses > 0 && !playerWinOrLose){
+            log(e.key);
+            userKeyPress = e.key;
 
-    	$.each(usedLetters, function(i, val){
+            var usedLetterMatch = false;        
 
-			if(userKeyPress === val){
-				usedLetterMatch = true;
-			}
-    	});
+            $.each(usedLetters, function(i, val){
 
-        if(usedLetterMatch){
-        	$('.js-already-used-warning').html(userKeyPress + " is already used!");
+                if(userKeyPress === val){
+                    usedLetterMatch = true;
+                }
+            });
+
+            if(usedLetterMatch){
+                $('.js-already-used-warning').html(userKeyPress + " is already used!");
+            }
+            else{
+                $('.js-already-used-warning').html("");
+
+                var matchingPositions = compare(userKeyPress, currentWord);
+
+                // if array returned has length (has matching positions) - update the current word
+                if(matchingPositions.length > 0){
+                    updateWordLetters(currentWordLetters, userKeyPress, matchingPositions )
+                }
+
+                updateUsedWords();
+
+                updateGuesses();
+            }
+
+              // checks to see if the player has won or lost yet
+            winOrLose();    
         }
-        else{
-        	$('.js-already-used-warning').html("");
-
-        	var matchingPositions = compare(userKeyPress, currentWord);
-
-	        // if array returned has length (has matching positions) - update the current word
-	        if(matchingPositions.length > 0){
-	        	updateWordLetters(currentWordLetters, userKeyPress, matchingPositions )
-	        }
-
-	        updateUsedWords();
-
-        	updateGuesses();
-        }
-
-        // checks to see if the player has won or lost yet
-        winOrLose();      
+        
     });
 
     /**
@@ -154,6 +162,7 @@ $( document ).ready(function() {
 		}
 
 		usedLetters = nonMatchingLetters.concat(matchingLetters);
+        usedLetters.sort();
 
 		// return array
 		return matchingLetterPosition;
@@ -181,42 +190,41 @@ $( document ).ready(function() {
 
     function winOrLose(){
     	if(blanksRemaining === 0){
-        	$('.js-win-or-lose').html("Congratulations! You Won!");
+        	$('.js-win-or-lose').html("You Won! :)");
+        	$('.modal-body').html("The word is " + "<b>" + currentWord + "</b>").append("<img src='http://www.clipartbest.com/cliparts/9c4/oEr/9c4oErjyi.png' alt='hangman'>");
+        	$('#myModal').modal('show');
         	wins++;
         	$('.js-win-counter').html(wins);
-        	$('#newGame').show();
-        	$('#newGame').on('click', function(){
-        		reset();
-        	})
+            playerWinOrLose = true;
         }
 
         if(guesses === 0){
-        	$('.js-win-or-lose').html("You ran out of guesses. Game Over! The word was '" + currentWord + "'");
-        	$('#newGame').show();
-        	$('#newGame').on('click', function(){
-        		reset();
-        	})
+        	$('#myModal').modal('show');
+        	$('.js-win-or-lose').html("You Lose :(" );
+        	$('.modal-body').html("The word was " + "<b>" + currentWord + "</b>").append("<img src='http://static.fjcdn.com/pictures/Hangman+family+http+2fun2quitcom_3675ce_3604407.jpg' alt='hangman'>");
+            playerWinOrLose = true;
         }
+        
     }
+
+    $('#newGame').on('click', function(){
+        reset();
+    });
 
     /**
 	 * resets the game with a new word
 	 */
     function reset(){
     	nonMatchingLetters = [];
-
 	    // matching letters
 	    matchingLetters = [];
-
 	    usedLetters = []; 
-
 	    guesses = 10;
-
 	    currentWordPosition++;
-
 	    currentWord = wordArray[currentWordPosition];
-
 	    currentWordLetters = [];
+        playerWinOrLose = false;
+        blanksRemaining = null;
 
 	    initialWordBlanks();
 
@@ -226,7 +234,6 @@ $( document ).ready(function() {
 
 	    $('.js-win-or-lose').html("");
 	    $('.js-already-used-warning ').html("");
-	    $('#newGame').hide();
 
 	    log('currentWordPosition = ' + currentWordPosition);
     }

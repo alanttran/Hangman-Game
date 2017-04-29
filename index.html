@@ -4,6 +4,9 @@
 	<meta charset="UTF-8">
 	<title>Hang Man</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Overpass+Mono" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+
 	<link rel="stylesheet" href="assets/css/style.css">
 
 
@@ -11,21 +14,41 @@
 <body>
 	<div class="container">
 		<h1>Welcome to Alan Tran's Hangman Game</h1>
-		<h2>Press any key to get started!</h2>
+		<h3>Press any key to get started!</h3>
 		<h2>Wins - <span class="js-win-counter">0</span></h2><br>
 		<h3>Number of Guesses Remaining</h3>
 		<h3 class="js-remaining-guesses">10</h3><br>
-		<h3>Current Word</h3>
-		<h1 class="js-current-word current-word"></h1><br>
+		<div class="box">
+			<h3>Current Word</h3>
+			<h1 class="js-current-word current-word"></h1>
+		</div>
+		<br>
 		<h3>Used Words</h3>
 		<div class="js-already-used-warning already-used-warning"></div>
 		<h2 class="js-used-words"></h2><br>
-		<h3 class="js-win-or-lose"></h3>
-		<button id = "newGame" class="btn btn-primary btn-lg">New Game</button>
+		
 
 	</div>
+
+	<div id = "myModal" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title js-win-or-lose"></h4>
+	      </div>
+	      <div class="modal-body">
+			
+	      </div>
+	      <div class="modal-footer">
+	        <button id = "newGame" type="button" class="btn btn-primary btn-lg" data-dismiss="modal">New Game</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </body>
 </html>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="assets/javascript/game.js"></script>
